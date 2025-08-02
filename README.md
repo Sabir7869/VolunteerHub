@@ -1,4 +1,4 @@
-# 🌐 Intern/Volunteer Registration Web App
+<img width="3200" height="2000" alt="Screenshot 2025-08-03 035015" src="https://github.com/user-attachments/assets/257d9491-c770-41d6-a223-954d47012189" /># 🌐 Intern/Volunteer Registration Web App
 
 A full-stack web application that allows interns or volunteers to register themselves through a form. Admins can view all submitted applicants through a secured admin panel. Built using **HTML, CSS, JS (Frontend)**, **Spring Boot (Backend)**, and **MySQL (Database)**.
 
@@ -42,4 +42,7 @@ A full-stack web application that allows interns or volunteers to register thems
 │ └── WebBackendApp.java
 ├── application.properties # MySQL and JPA config
 └── README.md
+
+
+![Uploading Screenshot 2025-08-03 035015.png…]()
 
