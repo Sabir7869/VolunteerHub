@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Volunteer Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Hero Background -->
+    <div class="hero-background">
+        <div class="hero-overlay"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-user-plus"></i> Join Our Community</h1>
+            <p class="subtitle">Register as a volunteer or intern and start making a difference today</p>
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+        </header>
+        
+        <main>
+            <form id="registrationForm" class="registration-form">
+                <div class="form-group">
+                    <label style="color: black;" for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" style="color: black;">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone" style="color: black;">Phone:</label>
+                    <input type="text" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="role" style="color: black;">Role:</label>
+                    <select id="role" name="role" required>
+                        <option value="">Select a role</option>
+                        <option value="Intern">Intern</option>
+                        <option value="Volunteer">Volunteer</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="skills" style="color: black;">Skills:</label>
+                    <input type="text" id="skills" name="skills" placeholder="e.g., JavaScript, Communication, Design" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit Registration</button>
+            </form>
+        </main>
+    </div>
+    
+    <script src="script/register.js"></script>
+</body>
+</html>

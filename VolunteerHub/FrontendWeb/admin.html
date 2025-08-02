@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Volunteer Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Hero Background -->
+    <div class="hero-background">
+        <div class="hero-overlay"></div>
+    </div>
+    
+    <div class="admin-container">
+        <!-- Admin Header -->
+        <header class="admin-header">
+            <div class="admin-nav">
+                <div class="admin-brand">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Admin Dashboard</span>
+                </div>
+                <div class="admin-actions">
+                    <button class="btn-refresh" id="refreshBtn">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                    <a href="index.html" class="btn-home">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Statistics Cards -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon total">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalApplicants">0</h3>
+                        <p>Total Applicants</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon interns">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalInterns">0</h3>
+                        <p>Intern Applications</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon volunteers">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalVolunteers">0</h3>
+                        <p>Volunteer Applications</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters and Controls -->
+        <section class="filters-section">
+            <div class="filters-container">
+                <div class="filter-controls">
+                    <select id="roleFilter" class="filter-select">
+                        <option value="">All Roles</option>
+                        <option value="Intern">Interns Only</option>
+                        <option value="Volunteer">Volunteers Only</option>
+                    </select>
+                    
+                    <select id="sortBy" class="filter-select">
+                        <option value="name">Sort by Name</option>
+                        <option value="email">Sort by Email</option>
+                        <option value="role">Sort by Role</option>
+                        <option value="recent">Most Recent</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+        <main class="admin-main">
+            <div class="table-section">
+                <div class="table-header">
+                    <h2>
+                        <i class="fas fa-table"></i>
+                        Applicant Management
+                    </h2>
+                    <div class="table-info">
+                        <span id="tableCount">Showing 0 applicants</span>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                  
+                    <div id="loadingState" class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>Loading applicants...</p>
+                    </div>
+
+                  
+                    <div id="errorState" class="error-state" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Unable to Load Data</h3>
+                        <p>There was an error connecting to the server. Please check your connection and try again.</p>
+                        <button class="btn-retry" onclick="loadApplicants()">
+                            <i class="fas fa-redo"></i>
+                            Retry
+                        </button>
+                    </div>
+
+                  
+                    <div id="emptyState" class="empty-state" style="display: none;">
+                        <i class="fas fa-inbox"></i>
+                        <h3>No Applicants Found</h3>
+                        <p>There are no applicant records to display. New applications will appear here.</p>
+                    </div>
+
+                  
+                    <div id="tableWrapper" class="table-wrapper" style="display: none;">
+                        <table id="applicantsTable" class="applicants-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" data-sort="name">
+                                        <i class="fas fa-user"></i>
+                                        Name
+                                        <i class="fas fa-sort sort-icon"></i>
+                                    </th>
+                                    <th class="sortable" data-sort="email">
+                                        <i class="fas fa-envelope"></i>
+                                        Email
+                                        <i class="fas fa-sort sort-icon"></i>
+                                    </th>
+                                    <th class="sortable" data-sort="phone">
+                                        <i class="fas fa-phone"></i>
+                                        Phone
+                                        <i class="fas fa-sort sort-icon"></i>
+                                    </th>
+                                    <th class="sortable" data-sort="role">
+                                        <i class="fas fa-tag"></i>
+                                        Role
+                                        <i class="fas fa-sort sort-icon"></i>
+                                    </th>
+                                    <th>
+                                        <i class="fas fa-cogs"></i>
+                                        Skills
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="applicantsTableBody">
+                  
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    
+    <div id="applicantModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-circle"></i> Applicant Details</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+    
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                <button class="btn btn-primary" onclick="contactApplicant()">
+                    <i class="fas fa-envelope"></i>
+                    Contact
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script/admin.js"></script>
+</body>
+</html>
